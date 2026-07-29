@@ -1,0 +1,64 @@
+schema: codex-offer-run.v1
+offer: "Second Chance Formula"
+target_folder: "C:\\Teste_cursor\\second-chance-formula"
+scope_lock:
+  allowed_paths:
+    - "C:\\Teste_cursor\\second-chance-formula"
+  forbidden_without_new_authorization:
+    - "C:\\n8n-projetos"
+    - "C:\\meu-framework"
+briefing:
+  origin: "clickup-sanitized"
+  task_id: "86ajr1ady"
+  clickup_parent: "86ajr1acx"
+  documento_principal: "Funil Second Chance Formula"
+  source_url: "https://razeresearch.com/razef"
+  route: "/vsl/"
+  page_type: "vsl"
+  language: "EN"
+  vturb_player_id: "PENDING"
+  meta_pixel_id: "PENDING"
+  utmify_pixel_id: "PENDING"
+  checkout_url: "PENDING_NOT_EXPOSED"
+status: "waiting-video"
+decisions:
+  - "Reproduce the source layout from one HTTP capture."
+  - "Use a neutral player placeholder until the official VSL embed is supplied."
+  - "Do not create a CTA below the player."
+  - "Exclude competitor trackers, players, buttons, and checkout URLs."
+gates:
+  scope: PASS
+  static: PASS
+  tracking: WAITING_OFFICIAL_IDS
+  mobile_390x844: PASS
+  desktop_1440x900: PASS
+  assets_natural_width: PASS
+  affected_cta_flow: PASS
+evidence:
+  - "evidence/source.html"
+  - "evidence/source-headers.txt"
+  - "evidence/clone-brief.md"
+  - "evidence/local-gate.json"
+  - "evidence/mobile-390x844.png"
+  - "evidence/desktop-1440x900.png"
+blockers:
+  - "Official VTurb embed not provided."
+  - "Official Meta/UTMify tracking not provided."
+files_touched:
+  - ".vercelignore"
+  - "README.md"
+  - "_ops/briefing.json"
+  - "_ops/OFFER-RUN.yaml"
+  - "_ops/qa-local.py"
+  - "evidence/clone-brief.md"
+  - "evidence/local-gate.json"
+  - "evidence/mobile-390x844.png"
+  - "evidence/desktop-1440x900.png"
+  - "evidence/source.html"
+  - "evidence/source-headers.txt"
+  - "vsl/index.html"
+execution_control:
+  budget_minutes: 10
+  alert_minutes: 10
+  same_gate_failures: 0
+  interrupted_worker: false

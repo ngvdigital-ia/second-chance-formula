@@ -1,0 +1,20 @@
+{
+  "origin": "manual",
+  "offer_name": "Second Chance Formula",
+  "task_id": "86ajr1ady",
+  "source_url_or_document": "https://razeresearch.com/razef",
+  "source_document": "Funil Second Chance Formula",
+  "target_dir": "C:\\Teste_cursor\\second-chance-formula",
+  "published_route": "/vsl/",
+  "requested_replacements": [
+    "use Second Chance Formula as the offer identity",
+    "replace the competitor video with a neutral placeholder",
+    "remove competitor tracking and checkout behavior",
+    "do not add a CTA below the player"
+  ],
+  "language": "EN",
+  "vturb_player_id": "PENDING",
+  "meta_pixel_id": "PENDING",
+  "utmify_pixel_id": "PENDING",
+  "checkout_url": "PENDING"
+}

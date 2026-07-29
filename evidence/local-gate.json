@@ -1,0 +1,125 @@
+{
+  "schema": "ngv-local-clone-gate.v1",
+  "status": "PASS",
+  "page": "vsl/index.html",
+  "static": {
+    "source_capture_bytes": 58679,
+    "source_capture_sha256": "885f7a084548d77fce1f40374930712f318d8d706dcf25d82e37e87baf7d2056",
+    "page_bytes": 4278,
+    "source_layout_markers": {
+      "page_max_width_460": 1,
+      "player_max_width_400": 5,
+      "background_0e0f13": 1,
+      "font_inter": 2
+    },
+    "forbidden_occurrences": {
+      "competitor domain": 0,
+      "competitor identity": 0,
+      "competitor player": 0,
+      "competitor/player markup": 0,
+      "UTMify": 0,
+      "Meta Pixel": 0,
+      "TikTok": 0,
+      "checkout": 0,
+      "operational button": 0,
+      "operational link": 0
+    },
+    "waiting_video": true,
+    "waiting_tracking": true,
+    "has_csp_meta": false
+  },
+  "browser": {
+    "one_shot_closed": true,
+    "domains": [
+      "127.0.0.1",
+      "fonts.googleapis.com",
+      "fonts.gstatic.com"
+    ],
+    "unexpected_domains": [],
+    "console_errors": [],
+    "viewports": [
+      {
+        "title": "The Second Chance Formula",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "document": {
+          "clientWidth": 390,
+          "scrollWidth": 390,
+          "clientHeight": 844,
+          "scrollHeight": 844
+        },
+        "horizontalOverflow": false,
+        "player": {
+          "width": 354,
+          "height": 200,
+          "top": 28
+        },
+        "controls": {
+          "anchors": 0,
+          "buttons": 0,
+          "forms": 0
+        },
+        "assets": {
+          "images": 0,
+          "broken": 0
+        },
+        "state": {
+          "delivery": "waiting-video",
+          "tracking": "waiting-tracking"
+        },
+        "screenshot": {
+          "path": "evidence/mobile-390x844.png",
+          "sha256": "a321739e20c81c5c2bf720aee1cdd76f8722324161d50f3d3514efcb94c6972f"
+        }
+      },
+      {
+        "title": "The Second Chance Formula",
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "document": {
+          "clientWidth": 1440,
+          "scrollWidth": 1440,
+          "clientHeight": 900,
+          "scrollHeight": 900
+        },
+        "horizontalOverflow": false,
+        "player": {
+          "width": 400,
+          "height": 226,
+          "top": 28
+        },
+        "controls": {
+          "anchors": 0,
+          "buttons": 0,
+          "forms": 0
+        },
+        "assets": {
+          "images": 0,
+          "broken": 0
+        },
+        "state": {
+          "delivery": "waiting-video",
+          "tracking": "waiting-tracking"
+        },
+        "screenshot": {
+          "path": "evidence/desktop-1440x900.png",
+          "sha256": "c2178fd34a33fce06bf347805132d9583d4d545b4da4ebf336b350de1cb48c5d"
+        }
+      }
+    ]
+  },
+  "gates": {
+    "scope": "PASS",
+    "source_capture": "PASS",
+    "static_sanitization": "PASS",
+    "mobile_390x844": "PASS",
+    "desktop_1440x900": "PASS",
+    "assets_natural_width": "PASS",
+    "affected_cta_flow": "PASS"
+  },
+  "failures": []
+}
