@@ -47,36 +47,22 @@
     }
 
     .player {
-      position: relative;
       width: 100%;
-      aspect-ratio: 400 / 921;
+    }
+
+    .player-placeholder {
+      position: relative;
+      left: 0;
+      width: 100%;
       overflow: hidden;
       border-radius: 14px;
       background: #050506;
       box-shadow: var(--shadow);
     }
 
-    /* Captured initial player frame from razeresearch.com/razef; no competitor player or tracking is reused. */
-    .player-frame {
+    vturb-smartplayer {
       position: absolute;
-      width: 360%;
-      max-width: none;
-      height: auto;
-      top: -4.78%;
-      left: -47.5%;
-      display: block;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .player::after {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: 13px;
-      content: "";
-      background: linear-gradient(90deg, #d81717 0 31%, rgba(199, 25, 25, .25) 31% 100%);
+      inset: 0;
     }
 
     footer {
@@ -94,15 +80,18 @@
     }
   </style>
 </head>
-<body data-delivery-state="waiting-video" data-tracking-state="waiting-tracking">
+<body data-tracking-state="waiting-tracking">
   <main class="page">
     <div class="column">
       <section class="player" aria-label="The Second Chance Formula video presentation">
-        <img class="player-frame" src="../output/playwright/original-1440-full.png" alt="The Second Chance Formula video presentation preview">
+        <div class="player-placeholder" style="padding:178.14814814814815% 0 0;">
+          <vturb-smartplayer id="vid-6a68fc902708cda8092f4776" style="display:block;margin:0 auto;width:100%;max-width:400px;"></vturb-smartplayer>
+        </div>
       </section>
 
       <footer>© 2026 The Second Chance Formula — All rights reserved.</footer>
     </div>
   </main>
+  <script async src="https://scripts.converteai.net/00c3b583-8874-4e64-a32e-65f6dd9ba521/players/6a68fc902708cda8092f4776/v4/player.js"></script>
 </body>
 </html>
