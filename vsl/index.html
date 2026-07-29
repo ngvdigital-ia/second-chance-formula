@@ -50,6 +50,48 @@
       width: 100%;
     }
 
+    .intro-panel {
+      display: grid;
+      min-height: 169px;
+      padding: 8px 18px 10px;
+      border-radius: 14px 14px 0 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(126, 11, 11, .16), transparent 42%), #050506;
+      box-shadow: var(--shadow);
+      place-content: center;
+      text-align: center;
+    }
+
+    .intro-line {
+      margin: 0;
+      color: #f7f3ed;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.12;
+      white-space: nowrap;
+    }
+    .intro-line--accent {
+      margin-top: 10px;
+      color: #d22922;
+      font-size: 26px;
+      line-height: 1.05;
+    }
+    .intro-line--last { margin-top: 8px; }
+    .intro-kicker {
+      margin: 10px 0 0;
+      color: #6e625f;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(11px, 2.9vw, 14px);
+      font-style: italic;
+    }
+    .intro-rule {
+      width: 52%;
+      height: 1px;
+      margin: 10px auto 0;
+      background: linear-gradient(90deg, transparent, #721111 22%, #e3332b 50%, #721111 78%, transparent);
+      box-shadow: 0 0 7px rgba(221, 45, 39, .72);
+    }
+
     .player-placeholder {
       position: relative;
       left: 0;
@@ -83,6 +125,13 @@
 <body data-tracking-state="waiting-tracking">
   <main class="page">
     <div class="column">
+      <header class="intro-panel">
+        <p class="intro-line">The Real Reason She Left...</p>
+        <p class="intro-line intro-line--accent">And How To Reverse It.</p>
+        <p class="intro-line intro-line--last">Before It’s Too Late.</p>
+        <p class="intro-kicker">(This changes everything.)</p>
+        <div class="intro-rule" aria-hidden="true"></div>
+      </header>
       <section class="player" aria-label="The Second Chance Formula video presentation">
         <div class="player-placeholder" style="padding:178.14814814814815% 0 0;">
           <vturb-smartplayer id="vid-6a68fc902708cda8092f4776" style="display:block;margin:0 auto;width:100%;max-width:400px;"></vturb-smartplayer>
