@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Second Chance Formula</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23c9312a'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0E0F13;
+    --bg-card:#15171F;
+    --bg-card-2:#1B1E28;
+    --ember-1:#FF6B35;
+    --ember-2:#C9312A;
+    --text:#F5F1EA;
+    --text-dim:#9C9894;
+    --text-dim-2:#6E6B68;
+    --line:rgba(245,241,234,0.08);
+    --blue-verified:#3B82F6;
+    --shadow:0 20px 50px rgba(0,0,0,0.45);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,107,53,0.08), transparent 45%),
+      var(--bg);
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    overflow-x:hidden;
+  }
+  .page{
+    width:100%;
+    max-width:460px;
+    padding:28px 18px 60px;
+    position:relative;
+  }
+
+  /* Video */
+  .video-wrap{
+    max-width:400px;
+    margin:0 auto;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    background:#000;
+  }
+  .video-wrap vturb-smartplayer,
+  .video-wrap vturb-smartplayer iframe,
+  .video-wrap vturb-smartplayer video,
+  .video-wrap iframe,
+  .video-wrap video{
+    width:100% !important;
+    height:auto !important;
+    display:block !important;
+  }
+
+  /* Scarcity module */
+  .scarcity{
+    margin:22px auto 0;
+    max-width:400px;
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-card-2));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px 18px 18px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .scarcity.visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .scarcity-top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .scarcity-label{
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+  }
+  .scarcity-count{
+    font-variant-numeric:tabular-nums;
+    font-weight:800;
+    font-size:15px;
+  }
+  .scarcity-count b{
+    color:var(--ember-1);
+    font-size:18px;
+  }
+  .fuse-track{
+    position:relative;
+    height:10px;
+    border-radius:6px;
+    background:rgba(255,255,255,0.06);
+    overflow:visible;
+  }
+  .fuse-fill{
+    position:absolute;
+    top:0;left:0;bottom:0;
+    border-radius:6px;
+    background:linear-gradient(90deg,var(--ember-2),var(--ember-1));
+    width:100%;
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .fuse-spark{
+    position:absolute;
+    top:50%;
+    width:16px;height:16px;
+    transform:translate(-50%,-50%);
+    right:0;
+    filter:drop-shadow(0 0 6px rgba(255,140,60,0.9));
+    transition:right .5s cubic-bezier(.4,0,.2,1);
+  }
+  .scarcity-sub{
+    margin-top:10px;
+    font-size:12px;
+    color:var(--text-dim-2);
+    text-align:center;
+  }
+  .scarcity.closed{
+    background:linear-gradient(180deg,#1c1613,#241a15);
+    border-color:rgba(255,107,53,0.25);
+  }
+  .scarcity.closed .fuse-fill{background:#3a2a22;}
+  .scarcity-closed-msg{
+    display:none;
+    text-align:center;
+    font-weight:800;
+    font-size:14.5px;
+    letter-spacing:0.01em;
+    color:var(--ember-1);
+  }
+  .scarcity.closed .scarcity-live{display:none;}
+  .scarcity.closed .scarcity-closed-msg{display:block;}
+
+  /* Trust row */
+  .trust-row{
+    max-width:400px;
+    margin:18px auto 0;
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    flex-wrap:wrap;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .trust-row.visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .trust-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:11.5px;
+    color:var(--text-dim-2);
+    font-weight:500;
+  }
+  .trust-item svg{flex-shrink:0;opacity:0.8;}
+
+  footer{
+    max-width:400px;
+    margin:34px auto 0;
+    text-align:center;
+    font-size:10.5px;
+    line-height:1.6;
+    color:#514E4B;
+  }
+
+  /* Toast */
+  .toast-host{
+    position:fixed;
+    left:12px;
+    bottom:14px;
+    z-index:60;
+    width:min(340px, calc(100vw - 24px));
+    pointer-events:none;
+  }
+  .toast{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    background:#FFFFFF;
+    color:#17181C;
+    border-radius:13px;
+    padding:10px 14px 10px 10px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.04);
+    transform:translateY(120%) scale(0.94);
+    opacity:0;
+    transition:transform .5s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+  }
+  .toast.show{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+  .toast-map{
+    width:46px;height:46px;
+    border-radius:9px;
+    overflow:hidden;
+    flex-shrink:0;
+    background:#EDEDE8;
+  }
+  .toast-map svg{display:block;width:100%;height:100%;}
+  .toast-body{min-width:0;}
+  .toast-name{
+    font-size:13.5px;
+    font-weight:700;
+    line-height:1.25;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .toast-action{
+    font-size:12px;
+    color:#55575E;
+    line-height:1.3;
+    margin-top:1px;
+  }
+  .toast-meta{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-top:3px;
+    font-size:11px;
+    color:#8A8D94;
+  }
+  .toast-verified{
+    display:flex;
+    align-items:center;
+    gap:3px;
+    color:var(--blue-verified);
+    font-weight:700;
+  }
+  .toast-verified svg{flex-shrink:0;}
+  .toast.toast-coupon{
+    border-left:4px solid var(--ember-1);
+    padding-left:10px;
+  }
+
+  /* Coupon card */
+  .coupon{
+    margin:18px auto 0;
+    max-width:400px;
+    background:linear-gradient(180deg,#241109,#150a06);
+    border:1px solid rgba(255,140,60,0.35);
+    border-radius:16px;
+    padding:18px 20px;
+    box-shadow:0 16px 36px rgba(0,0,0,0.35);
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transform:translateY(8px);
+    transition:opacity .5s ease, transform .5s ease, max-height .6s ease, padding .6s ease, margin .6s ease;
+  }
+  .coupon.show{
+    opacity:1;
+    max-height:900px;
+    transform:translateY(0);
+  }
+  .coupon-title{
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--ember-1);
+    margin:2px 0 8px;
+  }
+  .coupon-text{
+    font-size:13.5px;
+    color:var(--text-dim);
+    line-height:1.5;
+    margin-bottom:14px;
+  }
+  .coupon-code-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.05);
+    border:1px dashed rgba(255,140,60,0.45);
+    border-radius:10px;
+    padding:13px 12px;
+    margin-bottom:10px;
+  }
+  .coupon-code{
+    font-family:'Inter',monospace;
+    font-weight:800;
+    letter-spacing:0.14em;
+    font-size:20px;
+    color:#fff;
+  }
+  .coupon-copy-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    border:none;
+    border-radius:12px;
+    padding:15px 16px;
+    font-size:15.5px;
+    font-weight:800;
+    letter-spacing:0.01em;
+    color:#fff;
+    background:linear-gradient(90deg,var(--ember-1),var(--ember-2));
+    box-shadow:0 10px 26px rgba(255,90,50,0.35);
+    cursor:pointer;
+    margin-bottom:16px;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .coupon-copy-btn:active{
+    transform:scale(0.97);
+  }
+  .coupon-copy-btn.copied{
+    background:#2E7D46;
+    box-shadow:0 10px 26px rgba(46,125,70,0.35);
+  }
+  .coupon-scarcity{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:16px;
+  }
+  .coupon-scarcity-top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .coupon-scarcity-label{
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+  }
+  .coupon-scarcity-count{
+    font-variant-numeric:tabular-nums;
+    font-weight:800;
+    font-size:13.5px;
+    color:var(--text-dim);
+  }
+  .coupon-scarcity-count b{
+    color:var(--ember-1);
+    font-size:16px;
+  }
+  .coupon-steps{
+    margin:0 0 16px;
+    padding-left:20px;
+    font-size:13px;
+    color:var(--text-dim);
+    line-height:1.6;
+  }
+  .coupon-steps li{margin-bottom:3px;}
+  .coupon-steps b{color:var(--text);}
+  .coupon-reminder{
+    text-align:center;
+    font-size:12px;
+    color:var(--text-dim-2);
+    margin-top:12px;
+    line-height:1.5;
+  }
+
+  @media (max-width:360px){
+    .toast-host{left:8px;bottom:10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="video-wrap">
+    <!-- Official VTurb player pending: never reuse the reference player. -->
+    <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:177.77777777777777% 0 0;z-index:0;background-color:black;">
+      <span aria-label="Official video pending" style="position:absolute;inset:0;display:grid;place-items:center;color:#4b4c52;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;">Official video pending</span>
+    </div>
+  </div>
+
+  <div class="scarcity" id="scarcity">
+    <div class="scarcity-live">
+      <div class="scarcity-top">
+        <span class="scarcity-label">Limited enrollment</span>
+        <span class="scarcity-count"><b id="spotsNum">200</b> / 200 left</span>
+      </div>
+      <div class="fuse-track">
+        <div class="fuse-fill" id="fuseFill"></div>
+        <svg class="fuse-spark" id="fuseSpark" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="6" fill="#FFD08A"/>
+          <circle cx="12" cy="12" r="3" fill="#FFF3E0"/>
+        </svg>
+      </div>
+      <div class="scarcity-sub">Spots fill up in real time as women join the program.</div>
+    </div>
+    <div class="scarcity-closed-msg">🔒 Enrollment for this round is now closed.</div>
+  </div>
+
+  <div class="trust-row" id="trustRow">
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      Secure checkout
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg>
+      180-day guarantee
+    </div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      Instant access
+    </div>
+  </div>
+
+  <div class="coupon" id="coupon">
+    <div class="coupon-title">🎁 A gift for the ones who stayed</div>
+    <div class="coupon-text">You didn't make it into the first 200 spots — but here's a special thank-you for staying until the end. Use this code at checkout to unlock 25% off.</div>
+
+    <div class="coupon-code-row">
+      <span class="coupon-code" id="couponCodeText">25OFF</span>
+    </div>
+    <button class="coupon-copy-btn" id="couponCopyBtn" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      <span class="copy-label">Copy code</span>
+    </button>
+
+    <div class="coupon-scarcity">
+      <div class="coupon-scarcity-top">
+        <span class="coupon-scarcity-label">Special offer spots</span>
+        <span class="coupon-scarcity-count"><b id="couponSpotsNum">10</b> / 10 left</span>
+      </div>
+      <div class="fuse-track">
+        <div class="fuse-fill" id="couponFuseFill"></div>
+      </div>
+    </div>
+
+    <ol class="coupon-steps">
+      <li>Copy the code above.</li>
+      <li>When the button appears on the video, tap it to go to checkout.</li>
+      <li>Paste the code in the <b>Coupon</b> field to apply your 25% off.</li>
+    </ol>
+
+    <div class="coupon-reminder">⚠️ Copy the code now — without it at checkout, the discount won't be applied.</div>
+  </div>
+
+  <footer>
+    © 2026 The Second Chance Formula — All rights reserved.
+  </footer>
+</div>
+
+<div class="toast-host" id="toastHost"></div>
+
+<script>
+(function(){
+  // ---------- CONFIG ----------
+  // Timings synced to VSL runtime:
+  //   45:12 -> counter appears
+  //   45:25 -> first notification (13s after counter)
+  //   53:50 -> 200 spots fully gone / counter closes
+  //   54:20 -> coupon banner appears (30s after close)
+  //   54:50 -> coupon notifications begin (30s after banner)
+  //   55:51 -> coupon counter settles at 1 spot left
+  var SCARCITY_START_MS            = 2712 * 1000; // 45:12
+  var SCARCITY_DURATION_MS         = 518  * 1000; // 45:12 -> 53:50 (8m 38s = 518s)
+  var FIRST_NOTIFICATION_DELAY_MS  = 13   * 1000; // 13s after counter appears -> 45:25
+  var TOTAL_SPOTS = 200;
+  var TOAST_VISIBLE_MS = 3400;
+
+  var COUPON_DELAY_AFTER_CLOSE_MS  = 30 * 1000; // 53:50 -> 54:20
+  var COUPON_TOTAL                 = 10;
+  var COUPON_NOTIF_DELAY_MS        = 30 * 1000; // 54:20 -> 54:50 (notifications start)
+  var COUPON_EVENTS_DURATION_MS    = 61 * 1000; // 54:50 -> 55:51 (10 -> 1 remaining)
+
+  // ---------- DATA — 200 unique female American first names ----------
+  var names = [
+    "Emma","Olivia","Ava","Isabella","Sophia","Mia","Charlotte","Amelia","Harper","Evelyn",
+    "Abigail","Emily","Elizabeth","Mila","Ella","Avery","Sofia","Camila","Aria","Scarlett",
+    "Victoria","Madison","Luna","Grace","Chloe","Penelope","Layla","Riley","Zoey","Nora",
+    "Lily","Eleanor","Hannah","Lillian","Addison","Aubrey","Ellie","Stella","Natalie","Zoe",
+    "Leah","Hazel","Violet","Aurora","Savannah","Audrey","Brooklyn","Bella","Claire","Skylar",
+    "Lucy","Paisley","Everly","Anna","Caroline","Nova","Genesis","Emilia","Kennedy","Samantha",
+    "Maya","Willow","Kinsley","Naomi","Aaliyah","Elena","Sarah","Ariana","Allison","Gabriella",
+    "Alice","Madelyn","Cora","Ruby","Eva","Serenity","Autumn","Adeline","Hailey","Gianna",
+    "Valentina","Isla","Eliana","Quinn","Nevaeh","Ivy","Sadie","Piper","Lydia","Alexa",
+    "Josephine","Emery","Julia","Delilah","Arianna","Vivian","Kaylee","Sophie","Brielle","Madeline",
+    "Peyton","Rylee","Clara","Hadley","Melanie","Mackenzie","Reagan","Adalynn","Liliana","Aubree",
+    "Jade","Katherine","Isabelle","Natalia","Raelynn","Maria","Athena","Ximena","Brianna","Lauren",
+    "Leilani","Kylie","Kayla","Adriana","Norah","Harley","Trinity","Mariah","Daisy","Melody",
+    "Kendall","Jasmine","Cecelia","Annabelle","Lyla","Valeria","Maggie","Faith","Alexandra","Michelle",
+    "Jessica","Amanda","Nicole","Ashley","Vanessa","Kayleigh","Brooke","Molly","Cassidy","Brittany",
+    "Amber","Shelby","Tiffany","Danielle","Paige","Holly","Amber","Jenna","Lindsay","Megan",
+    "Kaitlyn","Courtney","Stephanie","Shannon","Heather","Jamie","Erica","Kelsey","Sierra","Morgan",
+    "Alexis","Jacqueline","Rebecca","Amanda","Crystal","Dawn","Stacy","Tamara","Renee","Leslie",
+    "Tara","Kelly","Dana","Candace","Tricia","Lacey","Mindy","Wendy","Rachel","Sandra",
+    "Diana","Melissa","Brenda","Cynthia","Karen","Susan","Donna","Patricia","Barbara","Jennifer"
+  ];
+
+  var cities = [
+    {c:"Austin, TX"},{c:"Denver, CO"},{c:"Phoenix, AZ"},{c:"Charlotte, NC"},{c:"Columbus, OH"},
+    {c:"Seattle, WA"},{c:"Nashville, TN"},{c:"Tampa, FL"},{c:"Sacramento, CA"},{c:"Portland, OR"},
+    {c:"Kansas City, MO"},{c:"Indianapolis, IN"},{c:"Raleigh, NC"},{c:"Orlando, FL"},{c:"Cincinnati, OH"},
+    {c:"Manchester, UK"},{c:"Birmingham, UK"},{c:"Leeds, UK"},{c:"Bristol, UK"},{c:"Liverpool, UK"},
+    {c:"Glasgow, UK"},{c:"Sheffield, UK"},
+    {c:"Berlin, DE"},{c:"Munich, DE"},{c:"Hamburg, DE"},{c:"Cologne, DE"},
+    {c:"Lyon, FR"},{c:"Marseille, FR"},{c:"Toulouse, FR"},
+    {c:"Madrid, ES"},{c:"Valencia, ES"},{c:"Seville, ES"},
+    {c:"Milan, IT"},{c:"Rome, IT"},{c:"Turin, IT"},
+    {c:"Amsterdam, NL"},{c:"Rotterdam, NL"},
+    {c:"Stockholm, SE"},{c:"Gothenburg, SE"},
+    {c:"Warsaw, PL"},{c:"Krakow, PL"},
+    {c:"Dublin, IE"},
+    {c:"Sydney, AU"},{c:"Melbourne, AU"},{c:"Brisbane, AU"},{c:"Perth, AU"},{c:"Adelaide, AU"}
+  ];
+
+  // Build 200 unique buyer pairs (names list has exactly 200 unique entries)
+  var buyers = [];
+  for (var i = 0; i < TOTAL_SPOTS; i++){
+    buyers.push({ name: names[i], city: cities[i % cities.length].c });
+  }
+  // shuffle reveal order
+  for (var j = buyers.length - 1; j > 0; j--){
+    var k = Math.floor(Math.random() * (j + 1));
+    var tmp = buyers[j]; buyers[j] = buyers[k]; buyers[k] = tmp;
+  }
+
+  // schedule 200 purchase timestamps spread with jitter across the window
+  var schedule = [];
+  (function build(){
+    var weights = [];
+    var sum = 0;
+    for (var i = 0; i < TOTAL_SPOTS; i++){
+      var w = 0.55 + Math.random();
+      weights.push(w); sum += w;
+    }
+    var cum = 0;
+    for (var i = 0; i < TOTAL_SPOTS; i++){
+      cum += weights[i];
+      schedule.push(SCARCITY_START_MS + FIRST_NOTIFICATION_DELAY_MS + (cum / sum) * (SCARCITY_DURATION_MS - FIRST_NOTIFICATION_DELAY_MS));
+    }
+  })();
+
+  // ---------- MAP THUMBNAIL ----------
+  function mapSvg(seed){
+    var rx = 16 + (seed * 7 % 16);
+    var ry = 16 + (seed * 13 % 14);
+    return '<svg viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">' +
+      '<rect width="46" height="46" fill="#DCE7DC"/>' +
+      '<path d="M-2 8 L48 8 M-2 18 L48 18 M-2 28 L48 28 M-2 38 L48 38" stroke="#C3D2C4" stroke-width="1"/>' +
+      '<path d="M8 -2 L8 48 M18 -2 L18 48 M28 -2 L28 48 M38 -2 L38 48" stroke="#C3D2C4" stroke-width="1"/>' +
+      '<path d="M-2 14 Q 14 24 24 16 T 48 20" stroke="#AEC6E8" stroke-width="3" fill="none" opacity="0.85"/>' +
+      '<g transform="translate(' + rx + ',' + ry + ')">' +
+        '<path d="M0,-13 C6,-13 9,-8.5 9,-4.5 C9,1 0,10 0,10 C0,10 -9,1 -9,-4.5 C-9,-8.5 -6,-13 0,-13 Z" fill="#E43D2F" stroke="#ffffff" stroke-width="1.4"/>' +
+        '<circle cx="0" cy="-4.5" r="3.2" fill="#ffffff"/>' +
+      '</g>' +
+      '</svg>';
+  }
+
+  // ---------- SCARCITY UI ----------
+  var scarcityEl = document.getElementById('scarcity');
+  var spotsNumEl = document.getElementById('spotsNum');
+  var fuseFillEl = document.getElementById('fuseFill');
+  var fuseSparkEl = document.getElementById('fuseSpark');
+  var remaining = TOTAL_SPOTS;
+
+  function updateFuse(){
+    var pct = (remaining / TOTAL_SPOTS) * 100;
+    fuseFillEl.style.width = pct + '%';
+    fuseSparkEl.style.right = (100 - pct) + '%';
+    spotsNumEl.textContent = remaining;
+  }
+  updateFuse();
+
+  var trustRowEl = document.getElementById('trustRow');
+
+  function showScarcity(){
+    scarcityEl.classList.add('visible');
+    trustRowEl.classList.add('visible');
+  }
+
+  function closeScarcity(){
+    scarcityEl.classList.add('closed');
+    setTimeout(startCouponFlow, COUPON_DELAY_AFTER_CLOSE_MS);
+  }
+
+  // ---------- TOAST UI ----------
+  var toastHost = document.getElementById('toastHost');
+  var toastEl = null;
+  var toastTimer = null;
+
+  function showToast(buyer, isCoupon){
+    if (toastEl) toastEl.remove();
+    var t = document.createElement('div');
+    t.className = 'toast' + (isCoupon ? ' toast-coupon' : '');
+    var actionText = isCoupon
+      ? '🎁 Just secured the 25% OFF deal!'
+      : 'Just joined The Second Chance Formula!';
+    var metaText = isCoupon
+      ? 'Applied 25OFF at checkout'
+      : 'Just now';
+    t.innerHTML =
+      '<div class="toast-map">' + mapSvg(buyer.name.length + buyer.city.length) + '</div>' +
+      '<div class="toast-body">' +
+        '<div class="toast-name">' + buyer.name + ' from ' + buyer.city + '</div>' +
+        '<div class="toast-action">' + actionText + '</div>' +
+        '<div class="toast-meta">' + metaText + ' &nbsp;·&nbsp; <span class="toast-verified"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 4.86L20 8l-4 3.9.94 5.5L12 15l-4.94 2.4L8 11.9 4 8l5.6-1.14L12 2z"/></svg>verified by Proof</span>' +
+      '</div>';
+    toastHost.appendChild(t);
+    toastEl = t;
+    void t.offsetWidth;
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ t.classList.add('show'); });
+    });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){
+      t.classList.remove('show');
+    }, TOAST_VISIBLE_MS);
+  }
+
+  // ---------- MAIN TIMELINE ----------
+  var startedAt = Date.now();
+  var nextIndex = 0;
+
+  setTimeout(showScarcity, SCARCITY_START_MS);
+
+  if (new URLSearchParams(window.location.search).has('reveal')) { showScarcity(); }
+  window.secondChanceWomenReveal = showScarcity;
+
+  var tickHandle = setInterval(function(){
+    var elapsed = Date.now() - startedAt;
+    while (nextIndex < schedule.length && elapsed >= schedule[nextIndex]){
+      remaining = Math.max(0, remaining - 1);
+      updateFuse();
+      showToast(buyers[nextIndex]);
+      nextIndex++;
+    }
+    if (nextIndex >= schedule.length){
+      clearInterval(tickHandle);
+      closeScarcity();
+    }
+  }, 350);
+
+  // ---------- COUPON FLOW ----------
+  var couponEl = document.getElementById('coupon');
+  var couponSpotsNumEl = document.getElementById('couponSpotsNum');
+  var couponFuseFillEl = document.getElementById('couponFuseFill');
+  var couponRemaining = COUPON_TOTAL;
+
+  function updateCouponFuse(){
+    var pct = (couponRemaining / COUPON_TOTAL) * 100;
+    couponFuseFillEl.style.width = pct + '%';
+    couponSpotsNumEl.textContent = couponRemaining;
+  }
+  updateCouponFuse();
+
+  function revealCoupon(){
+    couponEl.classList.add('show');
+    setTimeout(function(){
+      couponEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  }
+
+  function startCouponFlow(){
+    revealCoupon();
+
+    // Coupon buyers continue from index 200 onward — guaranteed no repeats
+    var couponEventsCount = COUPON_TOTAL - 1; // 10 -> 1 = 9 events
+    var couponBuyers = [];
+    for (var i = 0; i < couponEventsCount; i++){
+      var idx = TOTAL_SPOTS + i;
+      couponBuyers.push({ name: names[idx % names.length], city: cities[idx % cities.length].c });
+    }
+    for (var j = couponBuyers.length - 1; j > 0; j--){
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = couponBuyers[j]; couponBuyers[j] = couponBuyers[k]; couponBuyers[k] = tmp;
+    }
+
+    var couponSchedule = [];
+    var weights = [], sum = 0;
+    for (var i = 0; i < couponBuyers.length; i++){
+      var w = 0.5 + Math.random();
+      weights.push(w); sum += w;
+    }
+    var cum = 0;
+    for (var i = 0; i < couponBuyers.length; i++){
+      cum += weights[i];
+      // Notifications only start COUPON_NOTIF_DELAY_MS after the banner appears
+      couponSchedule.push(COUPON_NOTIF_DELAY_MS + (cum / sum) * COUPON_EVENTS_DURATION_MS);
+    }
+
+    var couponStart = Date.now();
+    var couponIdx = 0;
+    var couponTick = setInterval(function(){
+      var elapsed = Date.now() - couponStart;
+      while (couponIdx < couponSchedule.length && elapsed >= couponSchedule[couponIdx]){
+        couponRemaining = Math.max(1, couponRemaining - 1);
+        updateCouponFuse();
+        showToast(couponBuyers[couponIdx], true);
+        couponIdx++;
+      }
+      if (couponIdx >= couponSchedule.length){
+        clearInterval(couponTick);
+      }
+    }, 400);
+  }
+
+  // ---------- COPY CODE BUTTON ----------
+  document.getElementById('couponCopyBtn').addEventListener('click', function(){
+    var code = document.getElementById('couponCodeText').textContent.trim();
+    var btn = this;
+    var label = btn.querySelector('.copy-label');
+    function done(){
+      label.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function(){ label.textContent = 'Copy code'; btn.classList.remove('copied'); }, 1800);
+    }
+    function fallbackCopy(){
+      var ta = document.createElement('textarea');
+      ta.value = code;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      done();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(code).then(done).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
