@@ -35,83 +35,59 @@
   .page{
     width:100%;
     max-width:460px;
-    padding:44px 33px 60px;
+    padding:43px 33px 60px;
     position:relative;
   }
 
-  /* Video */
-  .video-wrap{
-    max-width:400px;
-    margin:0 auto;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-    background:#000;
-  }
-  .video-wrap vturb-smartplayer,
-  .video-wrap vturb-smartplayer iframe,
-  .video-wrap vturb-smartplayer video,
-  .video-wrap iframe,
-  .video-wrap video{
-    width:100% !important;
-    height:auto !important;
-    display:block !important;
-  }
-  .player-opening{
-    min-height:240px;
-    padding:16px 12px 12px;
+  /* Exact opening geometry used by the approved French VSL. */
+  .intro-panel{
     display:grid;
-    align-content:center;
-    gap:8px;
+    min-height:169px;
+    padding:8px 18px 10px;
+    border-radius:14px 14px 0 0;
+    background:radial-gradient(ellipse at 50% 30%,rgba(126,11,11,.16),transparent 42%),#050506;
+    box-shadow:var(--shadow);
+    place-content:center;
     text-align:center;
-    color:#f6f1e9;
-    background:#050506;
+  }
+  .intro-line{
+    margin:0;
+    color:#f7f3ed;
     font-family:Georgia,"Times New Roman",serif;
-  }
-  .player-opening p{margin:0;}
-  .player-opening__line{
-    font-size:clamp(20px,5.55vw,28px);
+    font-size:clamp(17px,5.2vw,22px);
     font-weight:700;
-    line-height:.96;
-    letter-spacing:-.035em;
+    line-height:1.16;
   }
-  .player-opening__line--accent{color:#e12424;}
-  .player-opening__line--last{font-size:clamp(18px,5vw,25px);}
-  .player-opening__kicker{
-    color:#a4988b;
-    font-size:clamp(14px,4.1vw,19px);
-    font-style:italic;
+  .intro-line--accent{
+    margin-top:10px;
+    color:#d22922;
+    font-size:clamp(19px,6vw,26px);
     line-height:1.1;
   }
-  .player-opening__rule{
-    width:70%;
-    height:2px;
-    margin:9px auto 0;
-    background:linear-gradient(90deg,transparent,#751212 25%,#f12d24 50%,#751212 75%,transparent);
-    box-shadow:0 0 10px rgba(224,36,36,.55);
+  .intro-line--last{margin-top:8px;}
+  .intro-kicker{
+    margin:10px 0 0;
+    color:#6e625f;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(11px,2.9vw,14px);
+    font-style:italic;
   }
-  .video-stage-placeholder{
+  .intro-rule{
+    width:52%;
+    height:1px;
+    margin:10px auto 0;
+    background:linear-gradient(90deg,transparent,#721111 22%,#e3332b 50%,#721111 78%,transparent);
+    box-shadow:0 0 7px rgba(221,45,39,.72);
+  }
+  .player-placeholder{
     position:relative;
-    min-height:420px;
+    width:100%;
     overflow:hidden;
-    background:radial-gradient(circle at 50% 26%,rgba(179,23,23,.22),transparent 28%),linear-gradient(135deg,#08080a 0%,#1b1112 47%,#060607 100%);
+    border-radius:0 0 14px 14px;
+    background:#050506;
+    box-shadow:var(--shadow);
   }
-  .video-stage-placeholder::before{
-    content:"";
-    position:absolute;
-    inset:0 0 auto;
-    height:48px;
-    opacity:.9;
-    background:repeating-linear-gradient(-18deg,#2d0606 0 10px,#d61f1f 10px 14px,#090607 14px 22px);
-    border-bottom:3px solid #a71515;
-    box-shadow:0 7px 20px rgba(205,25,25,.5);
-  }
-  .video-stage-placeholder::after{
-    content:"";
-    position:absolute;
-    inset:48px 0 0;
-    background:linear-gradient(180deg,rgba(255,255,255,.025),transparent 28%);
-  }
+  .player-placeholder vturb-smartplayer{position:absolute;inset:0;}
 
   /* Scarcity module */
   .scarcity{
@@ -435,18 +411,18 @@
 
 <div class="page">
 
-  <div class="video-wrap">
-    <div class="player-opening" aria-label="Introduction à la présentation">
-      <p class="player-opening__line">La Vraie Raison Pour Laquelle<br>Elle Est Partie...</p>
-      <p class="player-opening__line player-opening__line--accent">Et Comment Inverser La<br>Situation.</p>
-      <p class="player-opening__line player-opening__line--last">Avant Qu’il Ne Soit Trop Tard.</p>
-      <p class="player-opening__kicker">(Cela change tout.)</p>
-      <div class="player-opening__rule" aria-hidden="true"></div>
+  <header class="intro-panel">
+    <p class="intro-line">La Vraie Raison Pour Laquelle Elle Est Partie...</p>
+    <p class="intro-line intro-line--accent">Et Comment Inverser La Situation.</p>
+    <p class="intro-line intro-line--last">Avant Qu’il Ne Soit Trop Tard.</p>
+    <p class="intro-kicker">(Cela change tout.)</p>
+    <div class="intro-rule" aria-hidden="true"></div>
+  </header>
+  <section class="player" aria-label="Présentation vidéo de The Second Chance Formula">
+    <div class="player-placeholder" style="padding:177.03703703703704% 0 0;">
+      <vturb-smartplayer id="vid-6a762be2c796e42bf4dc2852" style="display:block;margin:0 auto;width:100%;max-width:400px;"></vturb-smartplayer>
     </div>
-    <!-- Official VTurb player pending: never reuse the reference player. -->
-    <div class="video-stage-placeholder" aria-label="Emplacement du lecteur vidéo officiel">
-    </div>
-  </div>
+  </section>
 
   <div class="scarcity" id="scarcity">
     <div class="scarcity-live">
@@ -802,5 +778,6 @@
 })();
 </script>
 
+<script async src="https://scripts.converteai.net/00c3b583-8874-4e64-a32e-65f6dd9ba521/players/6a762be2c796e42bf4dc2852/v4/player.js"></script>
 </body>
 </html>
