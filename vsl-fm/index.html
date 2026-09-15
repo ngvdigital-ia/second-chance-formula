@@ -57,6 +57,64 @@
     height:auto !important;
     display:block !important;
   }
+  .player-opening{
+    min-height:190px;
+    padding:14px 18px 12px;
+    display:grid;
+    align-content:center;
+    gap:7px;
+    text-align:center;
+    color:#f6f1e9;
+    background:#050506;
+    font-family:Georgia,"Times New Roman",serif;
+  }
+  .player-opening p{margin:0;}
+  .player-opening__line{
+    font-size:clamp(23px,7.3vw,34px);
+    font-weight:700;
+    line-height:.96;
+    letter-spacing:-.035em;
+  }
+  .player-opening__line--accent{color:#e12424;}
+  .player-opening__line--last{font-size:clamp(20px,6.1vw,29px);}
+  .player-opening__kicker{
+    color:#a4988b;
+    font-size:clamp(15px,4.5vw,20px);
+    font-style:italic;
+    line-height:1.1;
+  }
+  .player-opening__rule{
+    width:70%;
+    height:2px;
+    margin:7px auto 0;
+    background:linear-gradient(90deg,transparent,#751212 25%,#f12d24 50%,#751212 75%,transparent);
+    box-shadow:0 0 10px rgba(224,36,36,.55);
+  }
+  .video-stage-placeholder{
+    position:relative;
+    min-height:420px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 26%,rgba(179,23,23,.22),transparent 28%),
+      linear-gradient(135deg,#08080a 0%,#1b1112 47%,#060607 100%);
+  }
+  .video-stage-placeholder::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    opacity:.42;
+    background:repeating-linear-gradient(-18deg,transparent 0 17px,rgba(210,29,27,.32) 17px 20px,transparent 20px 37px);
+  }
+  .video-stage-placeholder::after{
+    content:"VIDEO";
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    color:rgba(245,241,234,.38);
+    font:700 12px/1 Inter,ui-sans-serif,system-ui,sans-serif;
+    letter-spacing:.17em;
+  }
 
   /* Scarcity module */
   .scarcity{
@@ -381,9 +439,15 @@
 <div class="page">
 
   <div class="video-wrap">
+    <div class="player-opening" aria-label="Introduction à la présentation">
+      <p class="player-opening__line">La Vraie Raison Pour Laquelle<br>Elle Est Partie...</p>
+      <p class="player-opening__line player-opening__line--accent">Et Comment Inverser La<br>Situation.</p>
+      <p class="player-opening__line player-opening__line--last">Avant Qu’il Ne Soit Trop Tard.</p>
+      <p class="player-opening__kicker">(Cela change tout.)</p>
+      <div class="player-opening__rule" aria-hidden="true"></div>
+    </div>
     <!-- Official VTurb player pending: never reuse the reference player. -->
-    <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:177.77777777777777% 0 0;z-index:0;background-color:black;">
-      <span aria-label="Official video pending" style="position:absolute;inset:0;display:grid;place-items:center;color:#4b4c52;font:700 11px/1 Inter,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;">Official video pending</span>
+    <div class="video-stage-placeholder" aria-label="Emplacement du lecteur vidéo officiel">
     </div>
   </div>
 
