@@ -35,7 +35,7 @@
   .page{
     width:100%;
     max-width:460px;
-    padding:28px 18px 60px;
+    padding:44px 33px 60px;
     position:relative;
   }
 
@@ -58,11 +58,11 @@
     display:block !important;
   }
   .player-opening{
-    min-height:190px;
-    padding:14px 18px 12px;
+    min-height:240px;
+    padding:16px 12px 12px;
     display:grid;
     align-content:center;
-    gap:7px;
+    gap:8px;
     text-align:center;
     color:#f6f1e9;
     background:#050506;
@@ -70,23 +70,23 @@
   }
   .player-opening p{margin:0;}
   .player-opening__line{
-    font-size:clamp(23px,7.3vw,34px);
+    font-size:clamp(20px,5.55vw,28px);
     font-weight:700;
     line-height:.96;
     letter-spacing:-.035em;
   }
   .player-opening__line--accent{color:#e12424;}
-  .player-opening__line--last{font-size:clamp(20px,6.1vw,29px);}
+  .player-opening__line--last{font-size:clamp(18px,5vw,25px);}
   .player-opening__kicker{
     color:#a4988b;
-    font-size:clamp(15px,4.5vw,20px);
+    font-size:clamp(14px,4.1vw,19px);
     font-style:italic;
     line-height:1.1;
   }
   .player-opening__rule{
     width:70%;
     height:2px;
-    margin:7px auto 0;
+    margin:9px auto 0;
     background:linear-gradient(90deg,transparent,#751212 25%,#f12d24 50%,#751212 75%,transparent);
     box-shadow:0 0 10px rgba(224,36,36,.55);
   }
@@ -94,26 +94,23 @@
     position:relative;
     min-height:420px;
     overflow:hidden;
-    background:
-      radial-gradient(circle at 50% 26%,rgba(179,23,23,.22),transparent 28%),
-      linear-gradient(135deg,#08080a 0%,#1b1112 47%,#060607 100%);
+    background:radial-gradient(circle at 50% 26%,rgba(179,23,23,.22),transparent 28%),linear-gradient(135deg,#08080a 0%,#1b1112 47%,#060607 100%);
   }
   .video-stage-placeholder::before{
     content:"";
     position:absolute;
-    inset:0;
-    opacity:.42;
-    background:repeating-linear-gradient(-18deg,transparent 0 17px,rgba(210,29,27,.32) 17px 20px,transparent 20px 37px);
+    inset:0 0 auto;
+    height:48px;
+    opacity:.9;
+    background:repeating-linear-gradient(-18deg,#2d0606 0 10px,#d61f1f 10px 14px,#090607 14px 22px);
+    border-bottom:3px solid #a71515;
+    box-shadow:0 7px 20px rgba(205,25,25,.5);
   }
   .video-stage-placeholder::after{
-    content:"VIDEO";
+    content:"";
     position:absolute;
-    inset:0;
-    display:grid;
-    place-items:center;
-    color:rgba(245,241,234,.38);
-    font:700 12px/1 Inter,ui-sans-serif,system-ui,sans-serif;
-    letter-spacing:.17em;
+    inset:48px 0 0;
+    background:linear-gradient(180deg,rgba(255,255,255,.025),transparent 28%);
   }
 
   /* Scarcity module */
