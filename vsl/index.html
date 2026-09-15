@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23c9312a'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0e0f13;
@@ -51,68 +51,16 @@
     }
 
     .intro-panel {
-      display: grid;
-      min-height: 155px;
-      padding: 8px 12px 10px;
+      overflow: hidden;
       border-radius: 14px 14px 0 0;
-      background: radial-gradient(ellipse at 50% 30%, rgba(126, 11, 11, .16), transparent 42%), #050506;
       box-shadow: var(--shadow);
-      place-content: center;
-      text-align: center;
     }
-
-    .intro-line {
-      margin: 0;
-      color: #f7f3ed;
-      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-      font-size: clamp(15px, 4.1vw, 16px);
-      font-weight: 700;
-      line-height: 1.16;
-      letter-spacing: -.025em;
+    .intro-art {
+      display: block;
+      width: 104%;
+      height: auto;
+      margin-left: -2%;
     }
-    .intro-line--accent {
-      margin-top: 8px;
-      color: #d22922;
-      font-size: clamp(24px, 6.7vw, 26px);
-      font-weight: 900;
-      line-height: 1.1;
-    }
-    .intro-kicker {
-      margin: 8px 0 0;
-      color: #6e625f;
-      font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-      font-size: clamp(10px, 2.9vw, 12px);
-      font-style: italic;
-      font-weight: 500;
-    }
-    .intro-rule {
-      position: relative;
-      z-index: 1;
-      width: 52%;
-      height: 2px;
-      margin: 7px auto 0;
-      background: transparent;
-    }
-    .intro-rule::before,
-    .intro-rule::after {
-      position: absolute;
-      content: "";
-      pointer-events: none;
-    }
-    .intro-rule::before {
-      inset: -8px -10px;
-      background: radial-gradient(ellipse at center, rgba(235, 42, 33, .42) 0, rgba(188, 21, 17, .16) 23%, transparent 62%);
-      filter: blur(1.5px);
-    }
-    .intro-rule::after {
-      top: .5px;
-      right: 0;
-      left: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0, rgba(118, 15, 12, .24) 14%, rgba(187, 25, 20, .75) 36%, #f03a2d 46%, #fff0db 50%, #f03a2d 54%, rgba(187, 25, 20, .75) 64%, rgba(118, 15, 12, .24) 86%, transparent 100%);
-      box-shadow: 0 0 3px rgba(255, 66, 51, .95), 0 0 8px rgba(202, 27, 20, .45);
-    }
-    .intro-rule--after-kicker { margin-top: 12px; }
 
     .player-placeholder {
       position: relative;
@@ -150,11 +98,7 @@
   <main class="page">
     <div class="column">
       <header class="intro-panel">
-        <p class="intro-line">Why Some Women Go Back To Their Ex...</p>
-        <div class="intro-rule" aria-hidden="true"></div>
-        <p class="intro-line intro-line--accent">And Others Never Do..</p>
-        <p class="intro-kicker">(The answer has nothing to do with love.)</p>
-        <div class="intro-rule intro-rule--after-kicker" aria-hidden="true"></div>
+        <img class="intro-art" src="../assets/second-chance-header-v1.png" alt="Why Some Women Go Back To Their Ex... And Others Never Do.." />
       </header>
       <section class="player" aria-label="Présentation vidéo de The Second Chance Formula">
         <div class="player-placeholder" style="padding:177.03703703703704% 0 0;">
