@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,106 +12,337 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
 
-  <style>
-    :root {
-      --bg: #0e0f13;
-      --bg-card: #15171f;
-      --bg-card-2: #1b1e28;
-      --ember-1: #ff6b35;
-      --ember-2: #c9312a;
-      --text: #f5f1ea;
-      --text-dim: #9c9894;
-      --text-dim-2: #6e6b68;
-      --line: rgba(245, 241, 234, .08);
-      --shadow: 0 20px 50px rgba(0, 0, 0, .45);
-    }
+<style>
+  :root{
+    --bg:#fff;
+    --headline-ink:#000;
+    --focus:#3B82F6;
+    --bg-card:#15171F;
+    --bg-card-2:#1B1E28;
+    --ember-1:#FF6B35;
+    --ember-2:#C9312A;
+    --text:#17181C;
+    --text-dim:#595959;
+    --text-dim-2:#595959;
+    --line:rgba(245,241,234,0.08);
+    --blue-verified:#3B82F6;
+    --shadow:0 20px 50px rgba(0,0,0,0.15);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  /* Keep the page colors and font above the VTurb loader's later body rule. */
+  html body{background:#fff;color:var(--text);font-family:'Inter',sans-serif;}
+  body{
+    min-width:320px;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    overflow-x:hidden;
+  }
+  .page{
+    width:100%;
+    max-width:460px;
+    padding:28px 33px 60px;
+    position:relative;
+  }
 
-    * {
-      box-sizing: border-box;
-    }
+  /* Headline (small class-style title above the video) */
+  .headline{
+    text-align:center;
+    max-width:400px;
+    margin:0 auto 14px;
+  }
+  .headline-title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:17px;
+    line-height:1.3;
+    letter-spacing:-0.01em;
+    color:var(--headline-ink);
+    margin:0 0 3px;
+  }
+  .headline-sub{
+    margin:0;
+    font-size:12px;
+    font-weight:500;
+    color:var(--text-dim-2);
+  }
+  @media (min-width:880px){
+    .headline{max-width:440px;margin:0 auto 18px;}
+    .headline-title{font-size:19px;}
+  }
 
-    html {
-      background: var(--bg);
-    }
+  /* Video */
+  .video-wrap{
+    position:relative;
+    width:100%;
+    max-width:400px;
+    margin:0 auto;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    background:#000;
+  }
+  /* Force the VTurb player's internal elements to fill the wrapper box.
+     This only overrides rendered width inside .video-wrap — it does not
+     touch the VTurb embed script or its own logic. The side margin stays
+     as-is (controlled by .page padding + this max-width). */
+  .video-wrap vturb-smartplayer,
+  .video-wrap vturb-smartplayer iframe,
+  .video-wrap vturb-smartplayer video,
+  .video-wrap iframe,
+  .video-wrap video{
+    width:100% !important;
+    height:auto !important;
+    display:block !important;
+  }
 
-    body {
-      min-width: 320px;
-      min-height: 100vh;
-      margin: 0;
-      overflow-x: hidden;
-      background:
-        radial-gradient(
-          circle at 50% 0%,
-          rgba(255, 107, 53, .08),
-          transparent 45%
-        ),
-        var(--bg);
-      color: var(--text);
-      font-family: Inter, Arial, sans-serif;
-    }
+  /* Responsive layout: single column on mobile, two columns on desktop */
+  .layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:
+      "video"
+      "chat"
+      "reserved"
+      "footer";
+    gap:0;
+  }
+  .layout > *{min-width:0;}
+  .video-wrap{grid-area:video;}
+  .chat-panel{grid-area:chat;}
+  .reserved-panels{grid-area:reserved;}
+  footer{
+    grid-area:footer;
+    width:100%;
+    max-width:400px;
+    margin:34px auto 0;
+    text-align:center;
+    font-size:10.5px;
+    line-height:1.6;
+    color:var(--text-dim);
+  }
 
-    .page {
-      width: 100%;
-      min-height: 100vh;
-      padding: 43px 18px 72px;
-    }
+  /* Comments / chat panel */
+  .chat-panel{
+    /* Dark reference card on the requested white page; card tokens stay local. */
+    --text:#F5F1EA;
+    --text-dim:#B8B4B0;
+    --text-dim-2:#A9A5A2;
+    position:relative;
+    width:100%;
+    margin:18px auto 0;
+    max-width:400px;
+    background:linear-gradient(180deg,var(--bg-card),var(--bg-card-2));
+    border:1px solid var(--line);
+    border-radius:16px;
+    display:flex;
+    flex-direction:column;
+    height:380px;
+    overflow:hidden;
+  }
+  .chat-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 14px;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .chat-header-left{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:13px;
+    font-weight:700;
+    color:var(--text);
+  }
+  .chat-live-dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:#4ADE80;
+    flex-shrink:0;
+  }
+  .chat-viewers{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--text-dim-2);
+    white-space:nowrap;
+  }
+  .chat-viewers svg{flex-shrink:0;opacity:0.75;}
+  .chat-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:12px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+    scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+  }
+  .chat-messages::-webkit-scrollbar{width:5px;}
+  .chat-messages::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:3px;}
+  .chat-msg{
+    display:flex;
+    gap:9px;
+    animation:msgIn .35s ease;
+  }
+  @keyframes msgIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .chat-avatar{
+    width:28px;height:28px;
+    border-radius:50%;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11.5px;
+    font-weight:800;
+    color:#fff;
+  }
+  .chat-msg-body{min-width:0;flex:1;}
+  .chat-msg-mention{color:var(--ember-1);font-weight:700;}
+  .chat-msg-name{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .chat-msg-you{
+    font-size:9.5px;
+    font-weight:800;
+    letter-spacing:0.03em;
+    color:var(--ember-1);
+    background:rgba(255,107,53,0.14);
+    border-radius:5px;
+    padding:1px 5px;
+  }
+  .chat-msg-text{
+    font-size:13px;
+    line-height:1.42;
+    color:var(--text-dim);
+    margin-top:1px;
+    word-wrap:break-word;
+  }
+  .chat-new-pill{
+    position:absolute;
+    bottom:68px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--ember-1);
+    color:#fff;
+    font-size:11.5px;
+    font-weight:700;
+    padding:6px 13px;
+    border-radius:20px;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(255,107,53,0.4);
+    display:none;
+    z-index:3;
+    touch-action:manipulation;
+  }
+  .chat-new-pill.show{display:block;}
+  .chat-compose{
+    flex-shrink:0;
+    border-top:1px solid var(--line);
+    padding:10px 12px;
+    background:rgba(0,0,0,0.12);
+  }
+  .chat-name-row{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .3s ease, opacity .3s ease, margin .3s ease;
+  }
+  .chat-name-row.show{
+    max-height:46px;
+    opacity:1;
+    margin-bottom:8px;
+  }
+  .chat-name-input{
+    width:100%;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 12px;
+    font-size:16px;
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    touch-action:manipulation;
+  }
+  .chat-name-input.shake{animation:shakeX .35s ease;}
+  @keyframes shakeX{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+  .chat-name-input::placeholder{color:var(--text-dim-2);}
+  .chat-input-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .chat-input{
+    flex:1;
+    min-width:0;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:10px 15px;
+    font-size:16px;
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    touch-action:manipulation;
+  }
+  .chat-input::placeholder{color:var(--text-dim-2);}
+  .chat-send-btn{
+    flex-shrink:0;
+    width:44px;height:44px;
+    border-radius:50%;
+    border:none;
+    background:linear-gradient(135deg,var(--ember-1),var(--ember-2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:#fff;
+    transition:transform .15s ease;
+    touch-action:manipulation;
+  }
+  .chat-send-btn:active{transform:scale(0.9);}
 
-    .column {
-      width: min(400px, 100%);
-      margin-left: max(0px, calc((100vw - 1140px) / 2 + 22px));
+  @media (min-width:880px){
+    .page{max-width:920px;padding:40px 24px 70px;}
+    .layout{
+      grid-template-columns:minmax(0,1fr) minmax(0,400px);
+      gap:40px;
+      align-items:start;
+      grid-template-areas:
+        "video chat"
+        "reserved chat"
+        "footer chat";
     }
+    .video-wrap{grid-area:video;}
+    .chat-panel{grid-area:chat;margin-top:0;height:calc(100vh - 80px);max-height:760px;position:sticky;top:40px;}
+    footer{grid-area:footer;}
+  }
 
-    .player {
-      width: 100%;
-    }
-
-    .intro-panel {
-      overflow: hidden;
-      border-radius: 14px 14px 0 0;
-      box-shadow: var(--shadow);
-    }
-
-    .intro-art {
-      display: block;
-      width: 104%;
-      height: auto;
-      margin-left: -2%;
-    }
-
-    .player-placeholder {
-      position: relative;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      border-radius: 14px;
-      background: #050506;
-      box-shadow: var(--shadow);
-    }
-
-    footer {
-      /* The source retains the reserved space for its delayed panels before the footer. */
-      margin-top: 248px;
-      color: #514e4b;
-      font-size: 10.5px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    @media (max-width: 767px) {
-      .page {
-        padding: 43px 33px 60px;
-      }
-
-      .column {
-        width: 100%;
-        margin: 0 auto;
-      }
-    }
-  </style>
+  .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0; }
+  :focus-visible { outline:2px solid var(--focus);outline-offset:3px; }
+  .chat-name-row:not(.show) { visibility:hidden; }
+  /* kiss: preserve the source's reserved delayed-panel space; offer copy requires validated SCF terms. */
+  .reserved-panels { height:214px;max-width:400px;width:100%; }
+  @media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { animation:none!important;transition:none!important;scroll-behavior:auto!important; }
+  }
+</style>
 
   <!-- UTMIFY - PIXEL -->
   <script>
@@ -209,31 +440,370 @@
 </head>
 
 <body data-tracking-state="utmify">
-  <main class="page">
-    <div class="column">
-
-      <header class="intro-panel">
-        <img
-          class="intro-art"
-          src="../assets/second-chance-header-v1.png"
-          alt="Why Some Women Go Back To Their Ex... And Others Never Do.."
-        >
-      </header>
-
-      <section
-        class="player"
-        aria-label="Présentation vidéo de The Second Chance Formula"
-      >
-        <vturb-smartplayer id="ab-6af39c94c05b68ccf85730a3" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>
-      </section>
-
-      <footer>
-        © 2026 The Second Chance Formula — Tous droits réservés.
-      </footer>
-
+<main class="page">
+  <header class="headline">
+    <h1 class="headline-title">Why Some Women Go Back To Their Ex... And Others Never Do..</h1>
+    <p class="headline-sub">The Second Chance Formula</p>
+  </header>
+  <div class="layout" id="layout">
+    <section class="video-wrap" id="videoWrap" aria-label="The Second Chance Formula video">
+      <vturb-smartplayer id="ab-6af39c94c05b68ccf85730a3" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>
+    </section>
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-left"><span class="chat-live-dot"></span>Comments</div>
+      <div class="chat-viewers">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span id="viewerCountText">0</span>&nbsp;watching
+      </div>
     </div>
-  </main>
+    <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-label="Comments"></div>
+    <button type="button" class="chat-new-pill" id="chatNewPill">↓ New comments</button>
+    <div class="chat-compose">
+      <div class="chat-name-row" id="chatNameRow">
+        <label class="sr-only" for="chatNameInput">Your first name</label>
+        <input type="text" id="chatNameInput" class="chat-name-input" placeholder="Your first name" maxlength="20" autocomplete="off">
+      </div>
+      <div class="chat-input-row">
+        <label class="sr-only" for="chatInput">Add a comment</label>
+        <input type="text" id="chatInput" class="chat-input" placeholder="Add a comment..." maxlength="140" autocomplete="off">
+        <button type="button" id="chatSendBtn" class="chat-send-btn" aria-label="Send comment">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
 
+    <div class="reserved-panels" aria-hidden="true"></div>
+    <footer>© 2026 The Second Chance Formula — All rights reserved.</footer>
+  </div>
+</main>
   <script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/00c3b583-8874-4e64-a32e-65f6dd9ba521/ab-test/6af39c94c05b68ccf85730a3/player.js", s.async=!0,document.head.appendChild(s); </script>
+<script id="scf-chat">
+
+(function(){
+
+  var pageStart = Date.now();
+  function elapsedSec(){ return (Date.now() - pageStart) / 1000; }
+
+  function targetViewers(t){
+    if (t < 60) return 236 + t * 0.9;
+    if (t < 280) return 296 + (t - 60) / 220 * 172;
+    if (t < 2019) return 468 - (t - 280) * 0.0175;
+    return Math.max(150, 437 - (t - 2019) * 0.14);
+  }
+
+  var viewerCurrent = targetViewers(0);
+  var viewerCountText = document.getElementById('viewerCountText');
+
+  function renderViewers(){
+    var val = Math.round(viewerCurrent);
+    viewerCountText.textContent = val;
+  }
+  renderViewers();
+
+  function tickViewers(){
+    var t = elapsedSec();
+    var target = targetViewers(t);
+    viewerCurrent += (target - viewerCurrent) * 0.25 + (Math.random() * 4 - 2);
+    renderViewers();
+  }
+  setInterval(tickViewers, 4000);
+
+  var CHAT_OPENING = [
+    "turning this up a little",
+    "had to grab my headphones for this",
+    "Why do some women go back while others move on? That's the bit I'm here for",
+    "curious what Second Chance Formula actually means",
+    "okay, I'm listening",
+    "Missed the last sentence, going back a second",
+    "That question is a lot to unpack",
+    "Waiting to hear how he explains the difference",
+    "Trying to catch every word in this part",
+    "putting my phone down to listen",
+    "I keep thinking about the question at the start",
+    "Not jumping to conclusions yet",
+    "The audio is clearer with headphones",
+    "need to sit with that point for a moment",
+    "I was about to ask the same thing",
+    "curious where this part is going",
+    "Taking a note so I can revisit that idea",
+    "This deserves more than background listening",
+    "hang on, let me catch up",
+    "Still trying to put that last point into words",
+    "I want to hear the context before deciding",
+    "Anyone else replaying parts as they go?",
+    "That distinction caught my attention",
+    "Keeping an open mind for the next section",
+    "just switched the sound on",
+    "I wonder how he'll connect this to the opening question",
+    "The title is what made me press play",
+    "watching this without multitasking now",
+    "I need the rest of that explanation",
+    "pausing my music for this",
+    "Following the thread a bit better now",
+    "There's a question I hadn't thought to ask",
+    "Curious how the formula is explained from here",
+    "okay, let me hear the whole point",
+    "I don't want to miss the next bit",
+    "the volume was too low on my end"
+];
+  var PHASES = [[0, 20], [28, 7], [104, 7], [164, 5], [205, 5], [296, 5], [586, 7], [728, 5], [826, 4], [990, 5], [1201, 4], [1489, 4], [1681, 4], [1984, 5], [2019, 16], [2480, 8]].map(function(phase){
+    return { start:phase[0], pool:CHAT_OPENING };
+  });
+  function currentPool(t){
+    var pool = PHASES[0].pool;
+    for (var i = 0; i < PHASES.length; i++){
+      if (t >= PHASES[i].start) pool = PHASES[i].pool; else break;
+    }
+    return pool;
+  }
+  var REPLY_AGREE = [
+    "yeah, I caught that part too",
+    "Same question crossed my mind",
+    "That's the line I was trying to remember",
+    "I had to listen to that twice as well",
+    "right, the context matters here",
+    "I'm waiting for the explanation too",
+    "Glad I'm not the only one taking notes",
+    "You put my question into words",
+    "yep, still piecing that bit together",
+    "That's where I paused the video",
+    "Heard it a little differently, listening again",
+    "let's see where he takes that thought"
+];
+  var REPLY_SUPPORT = [
+    "Taking a short pause to think about this",
+    "Some of these questions are hard to put into words",
+    "listening at my own pace",
+    "No rush, the video will still be here",
+    "I get why that part made you stop",
+    "This is a lot to take in at once",
+    "Worth hearing the full context",
+    "I'm going to replay that section quietly"
+];
+  var REPLY_CONGRATS = [
+    "still here, paying attention to the details",
+    "Checking my notes against what he's saying",
+    "I want to understand the terms he's explaining",
+    "Keeping the opening question in mind",
+    "Listening before I make up my mind",
+    "curious how he'll wrap this up",
+    "Going to think this through after the video",
+    "I'd rather hear the details than guess"
+];
+  function replyPoolFor(t){
+    if (t >= 586 && t < 728) return REPLY_SUPPORT;
+    if (t >= 2019) return REPLY_CONGRATS;
+    return REPLY_AGREE;
+  }
+  function pickReplier(excludeName){
+    var candidates = CHAT_NAMES.filter(function(name){
+      return name !== excludeName && recentAuthors.indexOf(name) === -1;
+    });
+    return candidates.length ? candidates[Math.floor(Math.random() * candidates.length)] : null;
+  }
+
+  function buildReactive(pool, targetName){
+    var text = pickMessage(pool);
+    if (Math.random() < 0.4){
+      text = '@' + targetName + ' ' + text;
+    }
+    return text;
+  }
+
+  var CHAT_NAMES = ["Adam", "Aiden", "Alan", "Albert", "Arthur", "Austin", "Blake", "Bradley", "Bruce", "Caleb", "Cameron", "Charles", "Chase", "Christian", "Christopher", "Connor", "Damian", "Dominic", "Dylan", "Elliot", "Ethan", "Evan", "Felix", "Finn", "Gabriel", "Gavin", "Graham", "Grant", "Harry", "Henry", "Hunter", "Isaac", "Jeremy", "Joel", "Jordan", "Julian", "Kyle", "Liam", "Logan", "Mason", "Nathan", "Noah", "Oliver", "Owen", "Peter", "Philip", "Russell", "Sebastian", "Simon", "Spencer", "Theo", "Tristan", "Vincent", "Walter", "Zachary"];
+  var AVATAR_COLORS = ['#FF6B35','#3B82F6','#22C55E','#A855F7','#F59E0B','#EC4899','#14B8A6','#EF4444'];
+
+  function colorFor(name){
+    var sum = 0;
+    for (var i = 0; i < name.length; i++) sum += name.charCodeAt(i);
+    return AVATAR_COLORS[sum % AVATAR_COLORS.length];
+  }
+
+  var recentMsgs = [];
+  var RECENT_MSG_LIMIT = CHAT_OPENING.length + REPLY_AGREE.length + REPLY_SUPPORT.length + REPLY_CONGRATS.length;
+  function pickMessage(pool){
+    var available = pool.filter(function(msg){ return recentMsgs.indexOf(msg) === -1; });
+    if (!available.length){
+      // Start a new cycle only for the exhausted pool; other pools keep their history.
+      var previous = recentMsgs[recentMsgs.length - 1];
+      recentMsgs = recentMsgs.filter(function(msg){ return pool.indexOf(msg) === -1; });
+      available = pool.filter(function(msg){ return pool.length === 1 || msg !== previous; });
+    }
+    var msg = available[Math.floor(Math.random() * available.length)];
+    recentMsgs.push(msg);
+    if (recentMsgs.length > RECENT_MSG_LIMIT) recentMsgs.shift();
+    return msg;
+  }
+
+  var chatMessagesEl = document.getElementById('chatMessages');
+  var chatNewPill = document.getElementById('chatNewPill');
+  var MAX_MSGS = 60, TRIM_TO = 40;
+
+  function renderText(el, text){
+    var parts = text.split(/(@[A-Za-z][A-Za-z'-]*)/g);
+    parts.forEach(function(part){
+      var node = document.createElement('span');
+      if (part.charAt(0) === '@') node.className = 'chat-msg-mention';
+      node.textContent = part;
+      el.appendChild(node);
+    });
+  }
+  function isNearBottom(){
+    return chatMessagesEl.scrollHeight - chatMessagesEl.scrollTop - chatMessagesEl.clientHeight < 60;
+  }
+  var lastCommenters = [];
+  var recentAuthors = [];
+  function addMessage(m){
+    // No eligible automatic author: safely skip instead of breaking the author window.
+    if (!m.name) return;
+    var atBottom = isNearBottom();
+    var row = document.createElement('div');
+    row.className = 'chat-msg';
+    var avatar = document.createElement('div');
+    avatar.className = 'chat-avatar';
+    avatar.style.background = colorFor(m.name);
+    avatar.textContent = m.name.charAt(0).toUpperCase();
+    var body = document.createElement('div');
+    body.className = 'chat-msg-body';
+    var name = document.createElement('div');
+    name.className = 'chat-msg-name';
+    name.textContent = m.name;
+    if (m.self){
+      var you = document.createElement('span');
+      you.className = 'chat-msg-you';
+      you.textContent = 'YOU';
+      name.appendChild(you);
+    }
+    var text = document.createElement('div');
+    text.className = 'chat-msg-text';
+    renderText(text, m.text);
+    body.append(name, text);
+    row.append(avatar, body);
+    chatMessagesEl.appendChild(row);
+    while (chatMessagesEl.children.length > MAX_MSGS){
+      for (var i = 0; i < (MAX_MSGS - TRIM_TO); i++){
+        if (chatMessagesEl.firstChild) chatMessagesEl.removeChild(chatMessagesEl.firstChild);
+      }
+    }
+    if (!m.self){
+      recentAuthors.push(m.name);
+      if (recentAuthors.length > 15) recentAuthors.shift();
+      lastCommenters.push(m.name);
+      if (lastCommenters.length > 8) lastCommenters.shift();
+    }
+    if (atBottom || m.self){
+      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+      chatNewPill.classList.remove('show');
+    } else {
+      chatNewPill.classList.add('show');
+    }
+  }
+  chatMessagesEl.addEventListener('scroll', function(){
+    if (isNearBottom()) chatNewPill.classList.remove('show');
+  });
+  chatNewPill.addEventListener('click', function(){
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+    chatNewPill.classList.remove('show');
+  });
+
+  (function seedInitialComments(){
+    var hookPool = PHASES[0].pool.slice();
+    var seedCount = Math.min(16, hookPool.length);
+    var shuffledNames = CHAT_NAMES.slice();
+    for (var j = shuffledNames.length - 1; j > 0; j--){
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = shuffledNames[j]; shuffledNames[j] = shuffledNames[k]; shuffledNames[k] = tmp;
+    }
+    for (var i = 0; i < seedCount; i++){
+
+      if (i > 0 && lastCommenters.length > 0 && Math.random() < 0.32){
+        var target = lastCommenters[lastCommenters.length - 1];
+        var replier = pickReplier(target);
+        var replyText = buildReactive(REPLY_AGREE, target);
+        addMessage({ name: replier, text: replyText, self: false });
+      } else {
+        var seedName = shuffledNames[i % shuffledNames.length];
+        if (recentAuthors.indexOf(seedName) !== -1) seedName = pickReplier(null);
+        addMessage({ name: seedName, text: pickMessage(hookPool), self: false });
+      }
+    }
+
+    chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+    chatNewPill.classList.remove('show');
+  })();
+
+  function postAmbient(){
+    var t = elapsedSec();
+
+    if (lastCommenters.length > 0 && Math.random() < 0.28){
+      var target = lastCommenters[lastCommenters.length - 1];
+      var replier = pickReplier(target);
+      var pool = replyPoolFor(t);
+      var text = buildReactive(pool, target);
+      addMessage({ name: replier, text: text, self: false });
+      return;
+    }
+    var pool = currentPool(t);
+    var msg = pickMessage(pool);
+    var name = pickReplier(null);
+    addMessage({ name: name, text: msg, self: false });
+  }
+  function scheduleNextAmbient(){
+    var delay = 14000 + Math.random() * 20000;
+    setTimeout(function(){
+      postAmbient();
+      scheduleNextAmbient();
+    }, delay);
+  }
+  scheduleNextAmbient();
+
+  var nameRow = document.getElementById('chatNameRow');
+  var nameInput = document.getElementById('chatNameInput');
+  var chatInput = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+  var userName = null;
+  try { userName = localStorage.getItem('scf_chat_name'); } catch (e) {}
+
+  chatInput.addEventListener('focus', function(){
+    if (!userName) nameRow.classList.add('show');
+  });
+
+  function trySend(){
+    var text = chatInput.value.trim();
+    if (!text){ chatInput.focus(); return; }
+    if (!userName){
+      var n = nameInput.value.trim();
+      if (!n){
+        nameRow.classList.add('show');
+        nameInput.classList.remove('shake');
+        void nameInput.offsetWidth;
+        nameInput.classList.add('shake');
+        nameInput.focus();
+        return;
+      }
+      userName = n.slice(0, 20);
+      try { localStorage.setItem('scf_chat_name', userName); } catch (e) {}
+      nameRow.classList.remove('show');
+    }
+    addMessage({ name: userName, text: text.slice(0, 140), self: true });
+    chatInput.value = '';
+    chatInput.focus();
+  }
+  sendBtn.addEventListener('click', trySend);
+  chatInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){ e.preventDefault(); trySend(); }
+  });
+  nameInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){
+      e.preventDefault();
+      if (nameInput.value.trim()) chatInput.focus();
+      else trySend();
+    }
+  });
+})();
+
+</script>
 </body>
 </html>
